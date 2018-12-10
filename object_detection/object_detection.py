@@ -1,12 +1,18 @@
+import numpy as np
 import cv2
-import numpy
-import matplotlib.pyplot as plt
 
-img = cv2.imread("dog1.jpg",cv2.IMREAD_GRAYSCALE)
+cap = cv2.VideoCapture(0)
+fourcc = cv2.VideoWriter_fourcc(*'XVID')
+out = cv2.VideoWriter('output.avi',fourcc, 20.0, (640,480))
 
-cv2.imshow('image_dog', img)
-cv2.waitKey(0)
+while(True):
+    ret, frame = cap.read()
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    out.write(frame)
+    cv2.imshow('frame',gray)
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+cap.release()
+out.release()
 cv2.destroyAllWindows()
-
-# plt.imshow(img, cmap='gray', interpolation='bicubic')
-# plt.show()
